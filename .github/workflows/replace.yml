@@ -7,21 +7,18 @@ jobs:
   replace:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Permet de pousser les modifications
+      contents: write
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        # with:
-        #   token: ${{ secrets.ACTIONS_GITHUB_TOKEN }}
-        # Si vous utilisez un Personal Access Token, décommentez la ligne ci-dessus
+        uses: actions/checkout@v5
 
       - name: Replace 7GrandDadPGN by nozory in all .lua files
         run: |
           find . -type f -name "*.lua" -exec sed -i 's/7GrandDadPGN/nozory/g' {} +
 
       - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "Replace 7GrandDadPGN by nozory in all .lua files"
           file_pattern: "*.lua"
