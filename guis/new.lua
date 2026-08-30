@@ -1072,9 +1072,9 @@ function vape:LoadGUI()
 	    Name = 'Player Container',
 	    Tooltip = 'Path to the player container (e.g., Workspace, Workspace.Players)',
 	    Placeholder = 'Players',
-	    Default = tostring(shared.PlayerContainer or 'Players'),
+	    Default = type(shared.PlayerContainer) == "string" and shared.PlayerContainer or 'Players',
 	    Function = function(value)
-	        local path = tostring(value)
+	        local path = type(value) == "string" and value or "Players"
 	        shared.PlayerContainer = path
 	        if vape.Libraries.entity and vape.Libraries.entity.updateContainer then
 	            vape.Libraries.entity.updateContainer(path)
