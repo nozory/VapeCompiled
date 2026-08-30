@@ -8,12 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      workflows: write   # <-- AJOUTE CETTE LIGNE
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Replace 7GrandDadPGN by nozory in ALL files (excluding .git)
+      - name: Replace 7GrandDadPGN by nozory in all files
         run: |
           find . -type f -not -path "./.git/*" -exec sed -i 's/7GrandDadPGN/nozory/g' {} +
 
