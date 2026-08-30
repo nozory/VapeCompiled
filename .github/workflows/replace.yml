@@ -1,23 +1,27 @@
-name: Replace text in games folder
+name: Replace text in all repo
 
 on:
-  workflow_dispatch:  # Permet de lancer manuellement depuis l'interface GitHub
+  workflow_dispatch:
 
 jobs:
   replace:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Permet de pousser les modifications
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        # with:
+        #   token: ${{ secrets.ACTIONS_GITHUB_TOKEN }}
+        # Si vous utilisez un Personal Access Token, décommentez la ligne ci-dessus
 
-      - name: Replace 7GrandDadPGN by nozory in games folder
+      - name: Replace 7GrandDadPGN by nozory in all .lua files
         run: |
-          find games -type f -name "*.lua" -exec sed -i 's/7GrandDadPGN/nozory/g' {} +
+          find . -type f -name "*.lua" -exec sed -i 's/7GrandDadPGN/nozory/g' {} +
 
       - name: Commit and push changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add games/
-          git diff --staged --quiet || git commit -m "Replace 7GrandDadPGN by nozory in games folder"
-          git push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Replace 7GrandDadPGN by nozory in all .lua files"
+          file_pattern: "*.lua"
