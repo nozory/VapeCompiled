@@ -1,0 +1,23 @@
+name: Replace text in games folder
+
+on:
+  workflow_dispatch:  # Permet de lancer manuellement depuis l'interface GitHub
+
+jobs:
+  replace:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Replace 7GrandDadPGN by nozory in games folder
+        run: |
+          find games -type f -name "*.lua" -exec sed -i 's/7GrandDadPGN/nozory/g' {} +
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add games/
+          git diff --staged --quiet || git commit -m "Replace 7GrandDadPGN by nozory in games folder"
+          git push
