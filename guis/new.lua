@@ -226,6 +226,7 @@ do
 	end
 end
 
+
 local tween = setmetatable({}, {
 	__index = function()
 		return {}
@@ -1064,6 +1065,23 @@ function vape:LoadGUI()
 			end
 		end,
 		Tooltip = 'Hover a toggle setting to bind it to a key'
+	})
+	
+	-- Conteneur personnalisé pour les joueurs
+	general:CreateTextBox({
+	    Name = 'Player Container',
+	    Tooltip = 'Path to the player container (e.g., Workspace, Workspace.Players)',
+	    Placeholder = 'Players',
+	    Default = shared.PlayerContainer or 'Players',
+	    Function = function(value)
+	        shared.PlayerContainer = value
+	        if vape.Libraries.entity and vape.Libraries.entity.updateContainer then
+	            vape.Libraries.entity.updateContainer(value)
+	        elseif vape.Libraries.entity and vape.Libraries.entity.Running then
+	            vape.Libraries.entity.stop()
+	            vape.Libraries.entity.start()
+	        end
+	    end
 	})
 	
 	general:CreateButton({
@@ -2262,6 +2280,7 @@ function vape:LoadGUI()
 			table.remove(vape.HeldKeybinds, index)
 		end
 	end))
+	
 end
 
 function vape:Remove(obj)
