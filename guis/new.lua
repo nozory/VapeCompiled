@@ -1018,7 +1018,7 @@ function vape:LoadGUI()
 								}, nil, component)
 								bind.Object.Position = UDim2.new(1, -40, 0, 5)
 	
-								table.insert(settingConnections, bind.Triggered:Connect(function(isDown))
+								table.insert(settingConnections, bind.Triggered:Connect(function(isDown)
 									if bind.Hold then
 										if component.Enabled ~= isDown then
 											if vape.SettingToggleNotifications.Enabled then
